@@ -1,0 +1,42 @@
+# Blender 3.6.23 MTL File: 'None'
+# www.blender.org
+
+newmtl Black_StraightTrack01.001
+Ns 50.625011
+Ka 1.000000 1.000000 1.000000
+Kd 0.119276 0.119276 0.119276
+Ks 0.500000 0.500000 0.500000
+Ke 0.000000 0.000000 0.000000
+Ni 1.500000
+d 1.000000
+illum 2
+
+newmtl Red_StraightTrack01.001
+Ns 104.975998
+Ka 1.000000 1.000000 1.000000
+Kd 1.000000 0.002015 0.000000
+Ks 0.500000 0.500000 0.500000
+Ke 0.000000 0.000000 0.000000
+Ni 1.500000
+d 1.000000
+illum 2
+
+newmtl White_StraightTrack01.001
+Ns 50.625011
+Ka 1.000000 1.000000 1.000000
+Kd 1.000000 1.000000 1.000000
+Ks 0.500000 0.500000 0.500000
+Ke 0.000000 0.000000 0.000000
+Ni 1.500000
+d 1.000000
+illum 2
+
+newmtl citybits_texture
+Ns 360.000000
+Ka 1.000000 1.000000 1.000000
+Ks 0.500000 0.500000 0.500000
+Ke 0.000000 0.000000 0.000000
+Ni 1.450000
+illum 2
+map_Kd citybits_texture.png
+map_d D:/Vasu/HTML/BrainWheels/CarDriving3D/models/Roads/citybits_texture.png

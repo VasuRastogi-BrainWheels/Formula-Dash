@@ -75,6 +75,7 @@
         function isBlack(c) { return c && c.r < 20 && c.g < 20 && c.b < 20; }
         function isBrown(c) { return c && c.r > 150 && c.g >100 && c.b < 100 && c.b>70; }
           function isBlue(c) { return c && c.r <20 && c.g <10 && c.b >150; }
+          function isGrey(c){ return checkColor(20,[197,197,197],c) }
          function isOrange(c) { return checkColor(20,[255,127,39],c) }
         let results = [];
 
@@ -83,14 +84,15 @@
                 const c = getPixel(x, y);
                 if (!c) continue;
 
-                if (isWhite(c)) {
+                if (isWhite(c)||isGrey(c)) {
                     // Road: check immediate neighbors North > East > South > West
+
                     let n = isWhite(getPixel(x, y - 1))||isBrown(getPixel(x, y - 1)) ? 'A' : 'O';
                     let e = isWhite(getPixel(x + 1, y))||isBrown(getPixel(x + 1, y)) ? 'A' : 'O';
                     let s = isWhite(getPixel(x, y + 1))||isBrown(getPixel(x, y + 1)) ? 'A' : 'O';
                     let w = isWhite(getPixel(x - 1, y))||isBrown(getPixel(x - 1, y)) ? 'A' : 'O';
                     let roadTile = n + e + s + w;
-
+                    if(isGrey(c)) roadTile="Goal"
                     results.push(`["road", 0, "${roadTile}", ${x}, ${y}]`);
                 } 
                 else if (isRed(c) || isGreen(c)|| isBlack(c)|| isBrown(c)|| isBlue(c)|| isOrange(c)) {

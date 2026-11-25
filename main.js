@@ -35,7 +35,7 @@ const MeshToLoad={
 		},
 	},
 	Roads:{
-		directory:"models/Roads/New",
+		directory:"models/Roads",
 		type:"obj",
 		Map:{	
 			A:"A",
@@ -260,6 +260,7 @@ export let Game={
 	ScreenWidth:718,
 	ScreenHeight:384,
 	MapCellSize:135,
+	MapCellCounts:61,
 	Frame:0,
 	Score:0,
 	countDown:5,
@@ -323,7 +324,7 @@ export let Game={
 		CityWorld.SigerWorld.add(fog)						
 
 		
-		Game.Player.car=await Game.addCar(userCar,[28,28])
+		Game.Player.car=await Game.addCar(userCar,[55,57])
 
 		await CityWorld.init()
 	
@@ -335,8 +336,8 @@ class getGameWorld{
 	constructor(name,sgWorld,map){
 		this.name=name
 		this.UnitSize=Game.MapCellSize
-		this.rows=31
-		this.columns=31
+		this.rows=Game.MapCellCounts
+		this.columns=Game.MapCellCounts
 		this.width=this.UnitSize*this.rows/2
 		this.height=this.UnitSize*this.columns/2
 		this.SigerWorld=sgWorld
@@ -359,9 +360,9 @@ class getGameWorld{
 			new sg.Vector3([14,0,18])
 		]
 		this.monitor={
-			rows:48,
-			columns:43,
-		    unitSize:5,
+			rows:78,
+			columns:73,
+		    unitSize:3,
 			canvas:document.querySelector("#monitor"),
 			ctx:document.querySelector("#monitor").getContext("2d"),
 			data:[],
@@ -370,8 +371,8 @@ class getGameWorld{
 			opponentIcon:new Image(),
 			async boot(){
 				let row=[]
-		        for(let i=0;i<=31;i++) row.push(0)		        
-		        for (let i=0;i<=31;i++) this.data.push([...row])
+		        for(let i=0;i<=Game.MapCellCounts;i++) row.push(0)		        
+		        for (let i=0;i<=Game.MapCellCounts;i++) this.data.push([...row])
 		       //set canvas size
 		        this.canvas.width=(this.rows)*this.unitSize
 		    	this.canvas.height=(this.columns)*this.unitSize
@@ -389,7 +390,7 @@ class getGameWorld{
 		        				
 		   },
 		   scanRoadmap(){
-
+		   	return
 		   	CityWorld.NodeMap.forEach((currentNode,i)=>{
 		   		if(i>=CityWorld.NodeMap.length-1) return
 		   		currentNode=sg.Vector2.fromVector3(currentNode,"xz")
@@ -421,9 +422,9 @@ class getGameWorld{
 		   	this.ctx.fillText(`${Math.abs(Game.Player.car.speed*14).toFixed(0)}`,5*u,34*u)
 		   	this.ctx.fillText(`${Math.abs(Game.Player.rank)}`,10*u,7*u)
 		 // draw minimap
-		   	for (var y = 0; y <= 31; y++) 
+		   	for (var y = 0; y <= Game.MapCellCounts; y++) 
 		   	{
-		   		for (var x = 0; x <= 31; x++) 
+		   		for (var x = 0; x <= Game.MapCellCounts; x++) 
 		   		{
 		   			let road=this.data[y][x]
 		   			if (road) this.ctx.fillRect((x+17)*u,(y+5)*u,u,u)
@@ -452,7 +453,7 @@ class getGameWorld{
 		   }
 		}
 	
-		this.SigerMap=new sg.SimpleGridMap(31,31,this.UnitSize,{autoScale:false,padding:0,plane:"xz"})
+		this.SigerMap=new sg.SimpleGridMap(Game.MapCellCounts,Game.MapCellCounts,this.UnitSize,{autoScale:false,padding:0,plane:"xz"})
 		this.addedEntities={
 			roadBlocksCount:0,
 			buildings:{},
@@ -564,7 +565,7 @@ this.background = {
 			})
 
 			roadEntity.colliders=[]
-			 //if(this.addedEntities.roadBlocksCount%2==0)roadEntity.Mesh.materials.getMaterial("citybits_texture").useLoadedTexture(document.querySelector("img"))
+			 if(this.addedEntities.roadBlocksCount%2==0 && roadEntity.Mesh.materials.hasMaterial("Black_StraightTrack01_001"))roadEntity.Mesh.materials.changeProperty("Black_StraightTrack01_001","diffuse",[0,0,0])
 			if(roadEntity.Mesh.groups.base) roadEntity.colliders=["base","base2"]
 				if (choosen=="Goal")roadEntity.Mesh.materials.changeProperty("redLight","diffuse",[1.105900 ,1.105900 ,1.105900])
 			if(roadEntity.Mesh.materials.hasMaterial("redLight"))Game.trafficSignal =roadEntity
@@ -735,8 +736,9 @@ this.background = {
 			if(objectAdder[entity]) await objectAdder[entity](cell,angleY,specialByte)
 		}
 		this.monitor.scanRoadmap()
+			Game.Camera.mountTo(Game.Player.car,new sg.Vector3( [0,15,CarSizes[userCar][3]]))
 
-	for(let i=0;i<1;i++){
+	for(let i=0;i<0;i++){
 			let car=await Game.addCar(kartChooser.chooseRand(allKarts),[27.96,27.8])
 			Game.Camera.mountTo(Game.Player.car,new sg.Vector3( [0,15,CarSizes[userCar][3]]))
  			Game.Opponents.push(new AICar(car,CityWorld.NodeMap,this.SigerMap,this.monitor.data ))
