@@ -1,8 +1,15 @@
-import {Siger} from "../Siger/Siger.js"
+
 import {map }  from "./CityMap.js"
+let sg
+try{
+	const {Siger}=await import("../Siger/iger.js")
+	sg=new Siger()
+}
+catch{
+	const {Siger}=await import("Siger")
+	sg=new Siger()
+}
 
-
-let sg=new Siger()
 
 
 
