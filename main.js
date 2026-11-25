@@ -2,7 +2,7 @@
 import {map }  from "./CityMap.js"
 let sg
 try{
-	const {Siger}=await import("../Siger/iger.js")
+	const {Siger}=await import("./Siger/Siger.js")
 	sg=new Siger()
 }
 catch{

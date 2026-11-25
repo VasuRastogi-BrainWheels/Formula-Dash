@@ -1,5 +1,5 @@
 import {Game} from './main.js';
-import {Siger} from '../Siger/Siger.js';
+import {Siger} from './Siger/Siger.js';
 let sg=new Siger()
 
 let ScreenWidth = 718 //window.innerHeight;
